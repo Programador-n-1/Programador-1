@@ -80,3 +80,63 @@ def delete_normativa():
         print(f"No se pudo eliminar la normativa: {error}")
     finally:
         cursor.close()
+
+
+def read_normativas():
+    cursor = conn.cursor()
+
+    # Prompt the user to choose the search criteria
+    print("Seleccione el criterio de búsqueda:")
+    print("1. Número de Normativa")
+    print("2. Palabra Clave")
+    opcion = input("Ingrese su opción: ")
+
+    if opcion == "1":
+        nro_normativa = input("Ingrese el número de normativa: ")
+        query = """SELECT N.id_normativa, N.nro_normativa, N.fecha, N.descripcion, C.categoria, J.poder, O.organo, T.normativa, N.palabras_clave 
+                FROM NORMATIVA N
+                JOIN CATEGORIA C ON C.id_categoria = N.id_categoria 
+                JOIN JURISDICCION J ON J.id_jurisdiccion = N.id_jurisdiccion 
+                JOIN ORGANO_LEGISLATIVO O ON O.id_organo = N.id_organo
+                JOIN TIPO_NORMATIVA T ON T.id_tipo_normativa = N.id_tipo_normativa 
+                WHERE N.nro_normativa LIKE %s ;
+                """
+        params = (nro_normativa,)
+    elif opcion == "2":
+        palabra_clave = input("Ingrese la palabra clave: ")
+        query = """SELECT N.id_normativa, N.nro_normativa, N.fecha, N.descripcion, C.categoria, J.poder, O.organo, T.normativa, N.palabras_clave 
+                FROM NORMATIVA N
+                JOIN CATEGORIA C ON C.id_categoria = N.id_categoria 
+                JOIN JURISDICCION J ON J.id_jurisdiccion = N.id_jurisdiccion 
+                JOIN ORGANO_LEGISLATIVO O ON O.id_organo = N.id_organo
+                JOIN TIPO_NORMATIVA T ON T.id_tipo_normativa = N.id_tipo_normativa 
+                WHERE N.palabras_clave LIKE %s ;
+                """
+        params = (f"%{palabra_clave}%",)
+    else:
+        print("Opción inválida.")
+        return
+
+    try:
+        cursor.execute(query, params)
+        normativas = cursor.fetchall()
+
+        if normativas:
+            print("Normativas:")
+            for normativa in normativas:
+                print('')
+                print("Id Normativa: " + str(normativa[0]))
+                print("Nro ley: " + str(normativa[1]))
+                print("Fecha: " + str(normativa[2]))
+                print("Descripción: "+ normativa[3])
+                print("Tipo Categoría: " + normativa[4])
+                print("Jurisdicción: "+ normativa[5])
+                print("Órgano Legislativo: " + normativa[6])
+                print("Tipo Normativa: " + normativa[7])
+                print('Palabras Clave: '+ normativa[8])
+        else:
+            print("No se encontraron normativas.")
+    except mysql.connector.Error as error:
+        print(f"No se pudo leer la normativa: {error}")
+    finally:
+        cursor.close()
