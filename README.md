@@ -11,6 +11,6 @@ Integrantes del Proyecto Integrador:
 | Herrera Edgar                  | edgarherrera849@gmail.com   | EdgarHerrera2023 |
 | Grosso Luisina                 | luligrosso97@gmail.com      | Luisina97        |
 | Ledesma Cristian Ezequiel      | cez27ledesma@gmail.com;     | EzequielLedesma  |
-| Moros Facundo                  | @gmail.com                  | FacundoMoros     |
+| Moros Facundo                  | morosfacundo@gmail.com                  | FacundoMoros     |
 | Oro Elias                      | greendaylife@hotmail.com    | EliasOro2030     |
 | Reyna Daniel                   | danielreyna1907@hotmail.com | Danitorey1907    |
